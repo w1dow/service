@@ -12,23 +12,28 @@ env:
   DOCKER_IMAGE: w1dow/service-app
   DOCKER_TAG: latest
   DOCKER_USERNAME: w1dow
-  DOCKER_PASSWORD: password3301##
+  DOCKER_PASSWORD: "password3301##"
 
 jobs:
   docker-build-push:
     runs-on: ubuntu-latest
+
     steps:
+      # Step 1: Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      # Step 2: Log in to Docker Hub (hardcoded)
       - name: Log in to Docker Hub
         run: |
           echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
+      # Step 3: Build the Docker image
       - name: Build Docker image
         run: |
           docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
 
+      # Step 4: Push Docker image to Docker Hub
       - name: Push Docker image
         run: |
           docker push $DOCKER_IMAGE:$DOCKER_TAG
