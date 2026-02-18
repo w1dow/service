@@ -8,12 +8,6 @@ on:
     branches:
       - main
 
-env:
-  DOCKER_IMAGE: w1dow/service-app
-  DOCKER_TAG: latest
-  DOCKER_USERNAME: w1dow
-  DOCKER_PASSWORD_BASE64: "cGFzc3dvcmQzMzAxIyM="  # base64 of password3301##
-
 jobs:
   docker-build-push:
     runs-on: ubuntu-latest
@@ -23,17 +17,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # Step 2: Log in to Docker Hub using base64-decoded password
+      # Step 2: Log in to Docker Hub (hardcoded)
       - name: Log in to Docker Hub
         run: |
-          echo "$DOCKER_PASSWORD_BASE64" | base64 --decode | docker login -u "$DOCKER_USERNAME" --password-stdin
+          echo "password3301" | docker login -u "w1dow1" --password-stdin
 
       # Step 3: Build Docker image
       - name: Build Docker image
         run: |
-          docker build -t $DOCKER_IMAGE:$DOCKER_TAG .
+          docker build -t w1dow1/service-app:latest .
 
       # Step 4: Push Docker image to Docker Hub
       - name: Push Docker image
         run: |
-          docker push $DOCKER_IMAGE:$DOCKER_TAG
+          docker push w1dow1/service-app:latest
